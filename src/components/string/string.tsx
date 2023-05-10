@@ -49,7 +49,7 @@ export const StringComponent: React.FC = () => {
           <p className={styles.text}>Максимум — 11 символов</p>
         </div>
         <div className={styles.button}>
-          <Button disabled={disableButton} onClick={e => onClick()} text={'Развернуть'}/>
+          <Button disabled={disableButton} onClick={() => onClick()} text={'Развернуть'}/>
         </div>
       </div>
       <div className={styles.letters}>
