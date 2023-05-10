@@ -45,8 +45,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <div className={styles.wrapper}>
         <div className={styles.input}>
-          <Input value={string} onChange={onChange} maxLength={11}/>
-          <p className={styles.text}>Максимум — 11 символов</p>
+          <Input value={string} onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
         </div>
         <div className={styles.button}>
           <Button disabled={disableButton} onClick={() => onClick()} text={'Развернуть'}/>

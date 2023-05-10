@@ -1,0 +1,39 @@
+.input {
+    width: 377px;
+    margin-right: 12px;
+}
+.text {
+    display: flex;
+    justify-self: start;
+    margin: 4px 0 0 16px;
+}
+
+.button {
+    width: 178px
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+.letters {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    max-width: 960px;
+    flex-wrap: wrap;
+    margin: 120px auto 0;
+}
+
+.circle {
+   margin-bottom: 48px;
+   margin-right: 16px;
+}
+
+.circle:nth-child(10+20) {
+    margin-right: 0;
+}
+
+.circle:nth-child(20) {
+    margin-right: 0;
+}
