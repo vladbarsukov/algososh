@@ -23,7 +23,7 @@ export const StringComponent: React.FC = () => {
     const str = string.split('');
     setNewString(str);
     setString('');
-    setTimeout(() => reverseStr(str, 0, str.length - 1), 1000);
+    setTimeout(() => reverseStr(str, 0, str.length - 1), DELAY_IN_MS);
   };
 
   const reverseStr = (str: string[], i: number, j: number) => {
@@ -39,21 +39,21 @@ export const StringComponent: React.FC = () => {
   };
 
   return (
-    <SolutionLayout title="Строка">
-      <div className={styles.wrapper}>
-        <div className={styles.input}>
-          <Input value={string} onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
+      <SolutionLayout title="Строка">
+        <div className={styles.wrapper}>
+          <div className={styles.input}>
+            <Input value={string} onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
+          </div>
+          <div className={styles.button}>
+            <Button disabled={disableButton} onClick={() => onClick()} text={'Развернуть'}/>
+          </div>
         </div>
-        <div className={styles.button}>
-          <Button disabled={disableButton} onClick={() => onClick()} text={'Развернуть'}/>
+        <div className={styles.letters}>
+          { newString ? newString.map((letter, index) =>
+              <Circle extraClass={'mr-8'} state={index === startIndex ||  index === endIndex ? ElementStates.Modified : ElementStates.Default } key={index} letter={letter}/>
+          ) : <></>
+          }
         </div>
-      </div>
-      <div className={styles.letters}>
-      { newString ? newString.map((letter, index) =>
-            <Circle extraClass={'mr-8'} state={index === startIndex ||  index === endIndex ? ElementStates.Modified : ElementStates.Default } key={index} letter={letter}/>
-        ) : <></>
-      }
-      </div>
-    </SolutionLayout>
+      </SolutionLayout>
   );
 };
