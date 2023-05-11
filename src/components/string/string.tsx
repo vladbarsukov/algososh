@@ -5,6 +5,8 @@ import {Button} from "../ui/button/button";
 import styles from "./string.module.css"
 import {Circle} from "../ui/circle/circle";
 import {ElementStates} from "../../types/element-states";
+import {DELAY_IN_MS} from "../../constants/delays";
+import {swap} from "../../utils/swap";
 
 export const StringComponent: React.FC = () => {
   const [string, setString] = useState('');
@@ -24,18 +26,13 @@ export const StringComponent: React.FC = () => {
     setTimeout(() => reverseStr(str, 0, str.length - 1), 1000);
   };
 
-  const swap = (str: string[], firstIndex: number, secondIndex: number): void => {
-    const temp = str[firstIndex];
-    str[firstIndex] = str[secondIndex];
-    str[secondIndex] = temp;
-  }
   const reverseStr = (str: string[], i: number, j: number) => {
     if (i < j) {
       swap(str, i, j);
       setStartIndex(i);
       setEndIndex(j);
       setNewString([...str]);
-      setTimeout(() => reverseStr(str, i + 1, j - 1), 1000);
+      setTimeout(() => reverseStr(str, i + 1, j - 1), DELAY_IN_MS);
     } else {
       setDisableButton(false)
     }

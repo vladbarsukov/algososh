@@ -4,6 +4,7 @@ import styles from './fibonacci-padge.module.css'
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
+import {DELAY_IN_MS} from "../../constants/delays";
 
 export const FibonacciPage: React.FC = () => {
   const [number, setNumber] = useState<number | null>(null);
@@ -21,23 +22,22 @@ export const FibonacciPage: React.FC = () => {
             setFibonacciArr([1]);
             setTimeout(() => {
                 setFibonacciArr(prevState => [...prevState, 1]);
-            }, 1000);
+            }, DELAY_IN_MS);
         } else {
             let prevPrevNum = 1;
             let prevNum = 1;
             setFibonacciArr([1]);
             setTimeout(() => {
                 setFibonacciArr(prevState => [...prevState, 1]);
-            }, 1000);
+            }, DELAY_IN_MS);
             for (let i = 2; i <= n; i++) {
                 const nextNum = prevPrevNum + prevNum;
                 setTimeout(() => {
                     setFibonacciArr(prevState => [...prevState, nextNum]);
                     if (i === n) {
                         setDisableButton(false)
-
                     }
-                }, i * 1000);
+                }, i * DELAY_IN_MS);
                 prevPrevNum = prevNum;
                 prevNum = nextNum;
             }
@@ -48,7 +48,7 @@ export const FibonacciPage: React.FC = () => {
     const onClick = () => {
         setDisableButton(true)
         if (number) {
-            setTimeout(() => fibonacci(number), 1000);
+            setTimeout(() => fibonacci(number), DELAY_IN_MS);
         }
     };
 
