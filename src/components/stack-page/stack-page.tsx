@@ -3,75 +3,45 @@ import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./stack-page.module.css"
 import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
-import {IStack} from "../../types/stack";
 import {Circle} from "../ui/circle/circle";
 import {ElementStates} from "../../types/element-states";
 import {SHORT_DELAY_IN_MS} from "../../constants/delays";
-
-class Stack<T> implements IStack<T> {
-  private container: T[] = [];
-  push = (item: T): void => {
-    this.container.push(item)
-  };
-  pop = (): void => {
-    this.container.pop()
-  };
-  peak = (): T | null => {
-    if (this.container.length === 0) {
-      return null;
-    }
-    return this.container[this.container.length - 1];
-  };
-  getSize = () => this.container.length;
-  getData = () => this.container;
-  deleteData = () => {
-    this.container = []
-  }
-}
-const stack = new Stack<string>();
+import {Stack} from "../../utils/stack";
+import {delay} from "../../utils/delay";
 
 export const StackPage: React.FC = () => {
   const [data, setData] = useState<string>('');
-  const [stackArr, setStackArr] = useState<string[]>([]);
-  const [topIndex, setTopIndex] = useState<number>(-1);
-  const [light, setLight] = useState<boolean>(true);
-  const [isLoadButton, setIsLoadButton] = useState(false);
-  const [disableButton, setDisableButton] = useState(false);
-
-
+  const [stack] = useState(new Stack<{value : string, state: ElementStates}>());
+  const [stackArr, setStackArr] = useState<{value : string, state: ElementStates}[]>([]);
+  const [isLoadAddButton, setIsLoadAddButton] = useState(false);
+  const [isLoadDeleteButton, setIsLoadDeleteButton] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setData(e.target.value);
 
-  const onAddButtonClick = () => {
+  const onAddButtonClick = async () => {
     if (data) {
-      stack.push(data);
+      stack.push({ value: data, state: ElementStates.Modified });
+      setIsLoadAddButton(true)
       setData('')
-      const curr = stack.getData()
-      setStackArr(curr)
-      console.log(curr)
-      setTopIndex(curr.length - 1)
-      setLight(true)
-      setIsLoadButton(true)
-      setDisableButton(true)
-      setTimeout(() => {
-        setLight(false)
-        setIsLoadButton(false)
-        setDisableButton(false)
-      }, SHORT_DELAY_IN_MS);
+      setStackArr([...stack.getData()])
+      setData("")
+      await delay(SHORT_DELAY_IN_MS)
+      stack.peak()!.state = ElementStates.Default;
+      setStackArr([...stack.getData()])
+      setIsLoadAddButton(false)
     }
   }
 
   const onDeleteButtonClick = () => {
+    setIsLoadDeleteButton(true)
     stack.pop();
-    const curr = [...stack.getData()];
-    setStackArr(curr);
-    setTopIndex(curr.length - 1)
+    setStackArr([...stack.getData()]);
+    setIsLoadDeleteButton(false)
   }
 
   const onCleanButtonClick = () => {
     stack.deleteData();
-    const curr = [...stack.getData()];
-    setStackArr(curr);
+    setStackArr([...stack.getData()]);
   }
 
   return (
@@ -80,13 +50,13 @@ export const StackPage: React.FC = () => {
         <div className={styles.input}>
           <Input value={data} onChange={onChange} type={'text'} isLimitText={true} maxLength={4}/>
         </div>
-        <Button disabled={disableButton} isLoader={isLoadButton} onClick={onAddButtonClick} extraClass={'mr-6'} text={'Добавить'}/>
-        <Button disabled={disableButton} onClick={onDeleteButtonClick} extraClass={'mr-40'} text={'Удалить'}/>
-        <Button disabled={disableButton} onClick={onCleanButtonClick} text={'Очистить'}/>
+        <Button disabled={isLoadDeleteButton} isLoader={isLoadAddButton} onClick={onAddButtonClick} extraClass={'mr-6'} text={'Добавить'}/>
+        <Button disabled={isLoadAddButton} isLoader={isLoadDeleteButton} onClick={onDeleteButtonClick} extraClass={'mr-40'} text={'Удалить'}/>
+        <Button disabled={isLoadDeleteButton || isLoadAddButton} onClick={onCleanButtonClick} text={'Очистить'}/>
       </div>
       <div className={styles.letters}>
         { stackArr ? stackArr.map((letter, index) =>
-            <Circle state={light && topIndex === index ? ElementStates.Modified : ElementStates.Default } index={index} head={topIndex === index ? 'top' :''} extraClass={'mr-8'}  key={index} letter={letter}/>
+            <Circle state={letter.state} index={index} head={index === stackArr.length - 1 ? 'top' :''} extraClass={'mr-8'}  key={index} letter={letter.value}/>
         ) : <></>
         }
       </div>
