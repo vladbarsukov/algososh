@@ -10,21 +10,21 @@ import {Stack} from "../../utils/stack";
 import {delay} from "../../utils/delay";
 
 export const StackPage: React.FC = () => {
-  const [data, setData] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>('');
   const [stack] = useState(new Stack<{value : string, state: ElementStates}>());
   const [stackArr, setStackArr] = useState<{value : string, state: ElementStates}[]>([]);
   const [isLoadAddButton, setIsLoadAddButton] = useState(false);
   const [isLoadDeleteButton, setIsLoadDeleteButton] = useState(false);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => setData(e.target.value);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const onAddButtonClick = async () => {
-    if (data) {
-      stack.push({ value: data, state: ElementStates.Modified });
+    if (inputValue) {
+      stack.push({ value: inputValue, state: ElementStates.Modified });
       setIsLoadAddButton(true)
-      setData('')
+      setInputValue('')
       setStackArr([...stack.getData()])
-      setData("")
+      setInputValue("")
       await delay(SHORT_DELAY_IN_MS)
       stack.peak()!.state = ElementStates.Default;
       setStackArr([...stack.getData()])
@@ -48,7 +48,7 @@ export const StackPage: React.FC = () => {
     <SolutionLayout title="Стек">
       <div className={styles.wrapper}>
         <div className={styles.input}>
-          <Input value={data} onChange={onChange} type={'text'} isLimitText={true} maxLength={4}/>
+          <Input value={inputValue} onChange={onChange} type={'text'} isLimitText={true} maxLength={4}/>
         </div>
         <Button disabled={isLoadDeleteButton} isLoader={isLoadAddButton} onClick={onAddButtonClick} extraClass={'mr-6'} text={'Добавить'}/>
         <Button disabled={isLoadAddButton} isLoader={isLoadDeleteButton} onClick={onDeleteButtonClick} extraClass={'mr-40'} text={'Удалить'}/>

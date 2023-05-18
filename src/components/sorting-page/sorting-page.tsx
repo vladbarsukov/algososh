@@ -8,6 +8,7 @@ import {Direction} from "../../types/direction";
 import {swap} from "../../utils/swap";
 import {ElementStates} from "../../types/element-states";
 import {DELAY_IN_MS} from "../../constants/delays";
+import {delay} from "../../utils/delay";
 
 export const SortingPage: React.FC = () => {
   const [radioButton, setRadioButton] = useState(true);
@@ -39,30 +40,27 @@ export const SortingPage: React.FC = () => {
           setSortingIndex({ firstIndex: i, secondIndex: j })
         }
       }
-      await new Promise((resolve) =>
-          setTimeout(() => {
-            resolve(null);
-          }, DELAY_IN_MS)
-      );
+      await delay(DELAY_IN_MS)
       swap(numArr, i, indexMin)
       setSortedIndex(i);
     }
     setSortedIndex(numArr.length + 1);
     setNumArr([...numArr]);
   }
-
   const bubbleSort = async (ascending: boolean) => {
     for (let i = 0; i < numArr.length; i++) {
+      let sorted = true;
       for (let j = 0; j < numArr.length - 1 - i; j++) {
         if (ascending ? numArr[j + 1] < numArr[j] : numArr[j + 1] > numArr[j]) {
           swap(numArr, j, j + 1);
           setSortingIndex({ firstIndex: j, secondIndex: j + 1 });
-          await new Promise((resolve) =>
-              setTimeout(() => {
-                resolve(null);
-              }, DELAY_IN_MS)
-          );
+          await delay(DELAY_IN_MS);
+          sorted = false;
         }
+      }
+      if (sorted) {
+        setSortedIndex(numArr.length - 1 - i);
+        break;
       }
     }
     setSortingIndex({ firstIndex: null, secondIndex: null });
