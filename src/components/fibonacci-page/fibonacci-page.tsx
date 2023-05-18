@@ -59,7 +59,7 @@ export const FibonacciPage: React.FC = () => {
           <Input placeholder={"Введите число"} value={number && number <= 19 ? number : ''} onChange={onChange} isLimitText={true} type={'number'} max={19}/>
         </div>
         <div className={styles.button}>
-          <Button onClick={() => onClick()} isLoader={disableButton} text={'Рассчитать'}/>
+          <Button onClick={() => onClick()} disabled={!(number && number <= 19)} isLoader={disableButton} text={'Рассчитать'}/>
         </div>
       </div>
       <div className={styles.letters}>

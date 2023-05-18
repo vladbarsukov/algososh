@@ -140,9 +140,9 @@ export const ListPage: React.FC = () => {
         <Button onClick={onDeleteTailButtonClick} isLoader={isLoader.loader && isLoader.button === "deleteTail"} text="Удалить из tail" disabled={linkedList.isEmpty() || isLoader.loader} extraClass={styles.button}/>
       </div>
       <div className={styles.wrapperIndex}>
-        <Input name="index" type="number" value={inputValue?.index} onChange={onChange}/>
-        <Button onClick={onAddByIndexButtonClick} isLoader={isLoader.loader && isLoader.button ===  "addByIndex"} text="Добавить по индексу" disabled={!inputValue.index} extraClass={styles.buttonIndex}/>
-        <Button onClick={onDeleteByIndexButtonClick} isLoader={isLoader.loader && isLoader.button === "deleteByIndex"} text="Удалить по индексу" disabled={!inputValue.index} extraClass={styles.buttonIndex}/>
+        <Input name="index" max={linkedList.getLength() - 1} min={0} type="number" value={inputValue?.index} onChange={onChange}/>
+        <Button onClick={onAddByIndexButtonClick} isLoader={isLoader.loader && isLoader.button ===  "addByIndex"} text="Добавить по индексу" disabled={!inputValue.index || +inputValue.index > linkedList.getLength() - 1} extraClass={styles.buttonIndex}/>
+        <Button onClick={onDeleteByIndexButtonClick} isLoader={isLoader.loader && isLoader.button === "deleteByIndex"} text="Удалить по индексу" disabled={!inputValue.index || +inputValue.index > linkedList.getLength() - 1} extraClass={styles.buttonIndex}/>
       </div>
       <ul className={styles.letters}>
         {listArr ? listArr.map((item: any, index: number) => (

@@ -7,50 +7,49 @@ import {Circle} from "../ui/circle/circle";
 import {ElementStates} from "../../types/element-states";
 import {DELAY_IN_MS} from "../../constants/delays";
 import {swap} from "../../utils/swap";
+import {delay} from "../../utils/delay";
 
 export const StringComponent: React.FC = () => {
-  const [string, setString] = useState('');
-  const [newString, setNewString] = useState<string[]>([]);
-  const [startIndex, setStartIndex] = useState<null | number>(null);
-  const [endIndex, setEndIndex] = useState<null | number>(null);
+  const [string, setString] = useState<{value : string, state: ElementStates}[]>([]);
   const [disableButton, setDisableButton] = useState(false);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => setString(e.target.value);
-  const onClick = () => {
-    setDisableButton(true)
-    setStartIndex(null);
-    setEndIndex(null);
-    const str = string.split('');
-    setNewString(str);
-    setString('');
-    setTimeout(() => reverseStr(str, 0, str.length - 1), DELAY_IN_MS);
-  };
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => setString(
+    e.target.value.split("").map((value: string) => {
+      return { value, state: ElementStates.Default }
+  }));
 
-  const reverseStr = (str: string[], i: number, j: number) => {
-    if (i < j) {
+  const reverseStr = async (str: {value : string, state: ElementStates}[]) => {
+    setDisableButton(true)
+    const mid = Math.ceil(str.length / 2);
+    for (let i = 0; i < mid; i++) {
+      let j = str.length - 1 - i;
+      if (i !== j) {
+        str[i].state = ElementStates.Changing;
+        str[j].state = ElementStates.Changing;
+        setString([...str]);
+        await delay(DELAY_IN_MS);
+      }
       swap(str, i, j);
-      setStartIndex(i);
-      setEndIndex(j);
-      setNewString([...str]);
-      setTimeout(() => reverseStr(str, i + 1, j - 1), DELAY_IN_MS);
-    } else {
-      setDisableButton(false)
+      str[i].state = ElementStates.Modified;
+      str[j].state = ElementStates.Modified;
+      setString([...str]);
     }
+    setDisableButton(false)
   };
 
   return (
       <SolutionLayout title="Строка">
         <div className={styles.wrapper}>
           <div className={styles.input}>
-            <Input value={string} onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
+            <Input onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
           </div>
           <div className={styles.button}>
-            <Button disabled={disableButton} onClick={() => onClick()} text={'Развернуть'}/>
+            <Button disabled={!string.length} isLoader={disableButton} onClick={() => reverseStr(string)} text={'Развернуть'}/>
           </div>
         </div>
         <div className={styles.letters}>
-          { newString ? newString.map((letter, index) =>
-              <Circle extraClass={'mr-8'} state={index === startIndex ||  index === endIndex ? ElementStates.Modified : ElementStates.Default } key={index} letter={letter}/>
+          { string ? string.map((letter, index) =>
+              <Circle extraClass={'mr-8'} state={letter.state} key={index} letter={letter.value}/>
           ) : <></>
           }
         </div>

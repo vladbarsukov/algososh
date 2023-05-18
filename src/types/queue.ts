@@ -1,9 +1,3 @@
-import { ElementStates } from "./element-states";
-
-export interface IElement  {
-    value: string;
-    color: ElementStates
-}
 
 export interface IQueue<T>  {
     enqueue: (item: T) => void;
