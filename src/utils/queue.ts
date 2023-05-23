@@ -61,4 +61,4 @@ export class Queue<T> implements IQueue<T> {
         this.tail = 0;
     }
     isEmpty = (): boolean => this.getLength() === 0;
-}
+};
