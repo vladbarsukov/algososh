@@ -1,0 +1,51 @@
+/*.input {*/
+/*    width: 377px;*/
+/*    margin-right: 12px;*/
+/*}*/
+/*.text {*/
+/*    display: flex;*/
+/*    justify-self: start;*/
+/*    margin: 4px 0 0 16px;*/
+/*}*/
+
+/*.wrapper {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*}*/
+/*.letters {*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    justify-content: center;*/
+/*    margin: 120px 0 0;*/
+/*}*/
+
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+    max-width: 829px;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 78px;
+}
+.letters {
+    max-width: 980px;
+    width: 100%;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 10px;
+}
+.addButton {
+    width: 121px;
+    min-width: 121px;
+}
+.deleteButton {
+    width: 108px;
+    min-width: 108px;
+}
+.cleanButton {
+    width: 119px;
+    min-width: 119px;
+}
