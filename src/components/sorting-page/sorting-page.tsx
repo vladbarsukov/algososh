@@ -13,7 +13,6 @@ import {delay} from "../../utils/delay";
 export const SortingPage: React.FC = () => {
   const [radioButton, setRadioButton] = useState(true);
   const [numArr, setNumArr] = useState<number[]>([]);
-
   const [sortingIndex, setSortingIndex] = useState<{firstIndex: number | null, secondIndex: number | null}>({firstIndex: null, secondIndex: null});
   const [sortedIndex, setSortedIndex] = useState<null | number>(null);
 
