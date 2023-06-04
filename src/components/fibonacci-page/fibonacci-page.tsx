@@ -5,6 +5,7 @@ import {Input} from "../ui/input/input";
 import {Button} from "../ui/button/button";
 import {Circle} from "../ui/circle/circle";
 import {DELAY_IN_MS} from "../../constants/delays";
+import {fibonacci} from "../../utils/fibonacci";
 
 export const FibonacciPage: React.FC = () => {
   const [number, setNumber] = useState<number | null>(null);
@@ -15,40 +16,11 @@ export const FibonacciPage: React.FC = () => {
       setNumber(+e.target.value)
   };
 
-    const fibonacci = (n: number): void => {
-        if (n === 1) {
-            setFibonacciArr([1]);
-        } else if (n === 2) {
-            setFibonacciArr([1]);
-            setTimeout(() => {
-                setFibonacciArr(prevState => [...prevState, 1]);
-            }, DELAY_IN_MS);
-        } else {
-            let prevPrevNum = 1;
-            let prevNum = 1;
-            setFibonacciArr([1]);
-            setTimeout(() => {
-                setFibonacciArr(prevState => [...prevState, 1]);
-            }, DELAY_IN_MS);
-            for (let i = 2; i <= n; i++) {
-                const nextNum = prevPrevNum + prevNum;
-                setTimeout(() => {
-                    setFibonacciArr(prevState => [...prevState, nextNum]);
-                    if (i === n) {
-                        setDisableButton(false)
-                    }
-                }, i * DELAY_IN_MS);
-                prevPrevNum = prevNum;
-                prevNum = nextNum;
-            }
-        }
-    };
-
-
     const onClick = () => {
         setDisableButton(true)
         if (number) {
-            setTimeout(() => fibonacci(number), DELAY_IN_MS);
+            fibonacci(number, setFibonacciArr)
+            .then(() => setDisableButton(false))
         }
     };
 

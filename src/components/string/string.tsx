@@ -5,9 +5,7 @@ import {Button} from "../ui/button/button";
 import styles from "./string.module.css"
 import {Circle} from "../ui/circle/circle";
 import {ElementStates} from "../../types/element-states";
-import {DELAY_IN_MS} from "../../constants/delays";
-import {swap} from "../../utils/swap";
-import {delay} from "../../utils/delay";
+import {reverseStr} from "../../utils/string";
 
 export const StringComponent: React.FC = () => {
   const [string, setString] = useState<{value : string, state: ElementStates}[]>([]);
@@ -18,24 +16,11 @@ export const StringComponent: React.FC = () => {
       return { value, state: ElementStates.Default }
   }));
 
-  const reverseStr = async (str: {value : string, state: ElementStates}[]) => {
+  const onClick = () => {
     setDisableButton(true)
-    const mid = Math.ceil(str.length / 2);
-    for (let i = 0; i < mid; i++) {
-      let j = str.length - 1 - i;
-      if (i !== j) {
-        str[i].state = ElementStates.Changing;
-        str[j].state = ElementStates.Changing;
-        setString([...str]);
-        await delay(DELAY_IN_MS);
-      }
-      swap(str, i, j);
-      str[i].state = ElementStates.Modified;
-      str[j].state = ElementStates.Modified;
-      setString([...str]);
-    }
-    setDisableButton(false)
-  };
+    reverseStr(string, setString)
+    .then(() => setDisableButton(false))
+  }
 
   return (
       <SolutionLayout title="Строка">
@@ -44,7 +29,7 @@ export const StringComponent: React.FC = () => {
             <Input onChange={onChange} type={'text'} isLimitText={true} maxLength={11}/>
           </div>
           <div className={styles.button}>
-            <Button disabled={!string.length} isLoader={disableButton} onClick={() => reverseStr(string)} text={'Развернуть'}/>
+            <Button disabled={!string.length} isLoader={disableButton} onClick={() => onClick()} text={'Развернуть'}/>
           </div>
         </div>
         <div className={styles.letters}>
