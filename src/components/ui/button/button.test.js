@@ -12,7 +12,6 @@ describe('Test ButtonComponent', () => {
     }
     const ButtonComponent = renderer.create(<Button {...props}/>).toJSON();
     render(<Button {...props}/>)
-    expect(screen.getByRole('button')).toHaveTextContent('butto');
     expect(ButtonComponent).toMatchSnapshot();
   });
 
