@@ -18,4 +18,5 @@ export const reverseStr = async (str: {value : string, state: ElementStates}[], 
         str[j].state = ElementStates.Modified;
         setState([...str]);
     }
+    return str
 };
