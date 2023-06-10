@@ -9,6 +9,7 @@ import {swap} from "../../utils/swap";
 import {ElementStates} from "../../types/element-states";
 import {DELAY_IN_MS} from "../../constants/delays";
 import {delay} from "../../utils/delay";
+import {bubbleSort, selectionSort} from "../../utils/sorting";
 
 export const SortingPage: React.FC = () => {
   const [radioButton, setRadioButton] = useState(true);
@@ -33,41 +34,41 @@ export const SortingPage: React.FC = () => {
     }
     setNumArr(randomArr);
   }
-  const selectionSort = async (ascending: boolean) => {
-    for (let i = 0; i < numArr.length; i++) {
-      let indexMin = i
-      for (let j = i + 1; j < numArr.length; j++) {
-        if (ascending ? numArr[j] < numArr[indexMin] : numArr[j] > numArr[indexMin]) {
-          indexMin = j
-          setSortingIndex({ firstIndex: i, secondIndex: j })
-        }
-      }
-      await delay(DELAY_IN_MS)
-      swap(numArr, i, indexMin)
-      setSortedIndex(i);
-    }
-    setSortedIndex(numArr.length + 1);
-    setNumArr([...numArr]);
-  }
-  const bubbleSort = async (ascending: boolean) => {
-    for (let i = 0; i < numArr.length; i++) {
-      let sorted = true;
-      for (let j = 0; j < numArr.length - 1 - i; j++) {
-        if (ascending ? numArr[j + 1] < numArr[j] : numArr[j + 1] > numArr[j]) {
-          swap(numArr, j, j + 1);
-          setSortingIndex({ firstIndex: j, secondIndex: j + 1 });
-          await delay(DELAY_IN_MS);
-          sorted = false;
-        }
-      }
-      if (sorted) {
-        setSortedIndex(numArr.length - 1 - i);
-        break;
-      }
-    }
-    setSortingIndex({ firstIndex: null, secondIndex: null });
-    setNumArr([...numArr]);
-  };
+  // const selectionSort = async (ascending: boolean) => {
+  //   for (let i = 0; i < numArr.length; i++) {
+  //     let indexMin = i
+  //     for (let j = i + 1; j < numArr.length; j++) {
+  //       if (ascending ? numArr[j] < numArr[indexMin] : numArr[j] > numArr[indexMin]) {
+  //         indexMin = j
+  //         setSortingIndex({ firstIndex: i, secondIndex: j })
+  //       }
+  //     }
+  //     await delay(DELAY_IN_MS)
+  //     swap(numArr, i, indexMin)
+  //     setSortedIndex(i);
+  //   }
+  //   setSortedIndex(numArr.length + 1);
+  //   setNumArr([...numArr]);
+  // }
+  // const bubbleSort = async (ascending: boolean) => {
+  //   for (let i = 0; i < numArr.length; i++) {
+  //     let sorted = true;
+  //     for (let j = 0; j < numArr.length - 1 - i; j++) {
+  //       if (ascending ? numArr[j + 1] < numArr[j] : numArr[j + 1] > numArr[j]) {
+  //         swap(numArr, j, j + 1);
+  //         setSortingIndex({ firstIndex: j, secondIndex: j + 1 });
+  //         await delay(DELAY_IN_MS);
+  //         sorted = false;
+  //       }
+  //     }
+  //     if (sorted) {
+  //       setSortedIndex(numArr.length - 1 - i);
+  //       break;
+  //     }
+  //   }
+  //   setSortingIndex({ firstIndex: null, secondIndex: null });
+  //   setNumArr([...numArr]);
+  // };
 
   const handleGenerateArrClick = async () => {
     setSortingIndex({ firstIndex: null, secondIndex: null })
@@ -78,13 +79,14 @@ export const SortingPage: React.FC = () => {
   const handleAscendingSortClick = async () => {
     setSortingIndex({ firstIndex: null, secondIndex: null })
     setSortedIndex(null);
-    radioButton ? await selectionSort(true) : await bubbleSort(true)
+    radioButton ? await selectionSort(numArr, true, setSortingIndex, setSortedIndex, setNumArr) : await bubbleSort(numArr, true, setSortingIndex, setSortedIndex, setNumArr)
   }
 
   const handleDescendingSortClick = async () => {
     setSortingIndex({ firstIndex: null, secondIndex: null })
     setSortedIndex(null);
-    radioButton ? await selectionSort(false) : await bubbleSort(false)
+    radioButton ? await selectionSort(numArr, false, setSortingIndex, setSortedIndex, setNumArr) : await bubbleSort(numArr, false, setSortingIndex, setSortedIndex, setNumArr)
+
   }
 
   return (

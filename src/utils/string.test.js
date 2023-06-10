@@ -48,29 +48,29 @@ describe('reverseStr', () => {
     { value: '', state: 'modified' },
   ];
 
+  const setState = jest.fn(); // Создаем mock-функцию для setState
+
   it('should return reversed odd string', async () => {
-    const setState = jest.fn(); // Создаем mock-функцию для setState
     const reversedStr = await reverseStr(oddString, setState);
+    // Ожидаем, что элементы массива были изменены в обратном порядке
     expect(reversedStr).toEqual(reverseOddString);
+    // Проверяем, что setState был вызван с измененным состоянием
     expect(setState).toHaveBeenCalledWith(reverseOddString);
   });
 
   it('should return reversed eval string', async () => {
-    const setState = jest.fn(); // Создаем mock-функцию для setState
     const reversedStr = await reverseStr(evalString, setState);
     expect(reversedStr).toEqual(reverseEvalString);
     expect(setState).toHaveBeenCalledWith(reverseEvalString);
   });
 
   it('should return reversed one letter string', async () => {
-    const setState = jest.fn(); // Создаем mock-функцию для setState
     const reversedStr = await reverseStr(oneLetterString, setState);
     expect(reversedStr).toEqual(reverseOneLetterString);
     expect(setState).toHaveBeenCalledWith(reverseOneLetterString);
   });
 
   it('should return reversed no letter string', async () => {
-    const setState = jest.fn(); // Создаем mock-функцию для setState
     const reversedStr = await reverseStr(noLetterString, setState);
     expect(reversedStr).toEqual(reverseNoLetterString);
     expect(setState).toHaveBeenCalledWith(reverseNoLetterString);
