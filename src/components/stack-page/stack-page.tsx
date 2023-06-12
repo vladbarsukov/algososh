@@ -50,7 +50,7 @@ export const StackPage: React.FC = () => {
         <div className={styles.input}>
           <Input value={inputValue} onChange={onChange} type={'text'} isLimitText={true} maxLength={4}/>
         </div>
-        <Button disabled={isLoadDeleteButton} isLoader={isLoadAddButton} onClick={onAddButtonClick} extraClass={'mr-6'} text={'Добавить'}/>
+        <Button disabled={isLoadDeleteButton || inputValue === ''} isLoader={isLoadAddButton} onClick={onAddButtonClick} extraClass={'mr-6'} text={'Добавить'}/>
         <Button disabled={isLoadAddButton} isLoader={isLoadDeleteButton} onClick={onDeleteButtonClick} extraClass={'mr-40'} text={'Удалить'}/>
         <Button disabled={isLoadDeleteButton || isLoadAddButton} onClick={onCleanButtonClick} text={'Очистить'}/>
       </div>
