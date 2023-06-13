@@ -40,7 +40,7 @@ describe('sorting', () => {
     expect(setNumArr).toHaveBeenCalledWith(sortedOneElementArr);
   });
 
-  it('should return bubble sorted array consisting of a single element', async () => {
+  it('should return bubble sorted array without element', async () => {
     const bubbleSorting = await bubbleSort([], true, setSortingIndex, setSortedIndex, setNumArr)
     expect(bubbleSorting).toEqual([]);
     expect(setNumArr).toHaveBeenCalledWith([]);
