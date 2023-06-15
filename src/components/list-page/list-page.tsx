@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from "react";
-import { SolutionLayout } from "../ui/solution-layout/solution-layout";
+import {SolutionLayout} from "../ui/solution-layout/solution-layout";
 import {IElementList, INode} from "../../types/linked-list";
-import {getRandomArray, LinkedList} from "../../utils/linked-list";
+import {LinkedList} from "../../utils/linked-list";
 import {ElementStates} from "../../types/element-states";
 import {delay} from "../../utils/delay";
 import {SHORT_DELAY_IN_MS} from "../../constants/delays";
@@ -14,7 +14,7 @@ import {ArrowIcon} from "../ui/icons/arrow-icon";
 
 export const ListPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<{value: string, index: string}>({ value: "", index: "" });
-  const [linkedList] = useState(new LinkedList<IElementList>(getRandomArray(3, 3)));
+  const [linkedList] = useState(new LinkedList<IElementList>([{value: 12, state: ElementStates.Default}, {value: 22, state: ElementStates.Default}, {value: 43, state: ElementStates.Default}, {value: 32, state: ElementStates.Default}]));
   const [listArr, setListArr] = useState<Array<INode<IElementList>>>(linkedList.toArray());
   const [node, setNode] = useState({addNode: false, delete: false, value: ""});
   const [elementIndex, setElementIndex] = useState<number>(0);
