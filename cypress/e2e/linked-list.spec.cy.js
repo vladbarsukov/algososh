@@ -1,5 +1,5 @@
-import {BUTTON, CIRCLE, CIRCLE_TAIL, COLOR_DEFAULT, COLOR_MODIFIED, INPUT, SMALL_CIRCLE} from "../constants";
-describe('should fibonacci page work correctly', function() {
+import {BUTTON, CIRCLE, CIRCLE_TAIL, INPUT, SMALL_CIRCLE} from "../constants";
+describe('should linked list page work correctly', function() {
   beforeEach(function() {
     cy.visit('/list');
   });
