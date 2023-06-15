@@ -7,6 +7,7 @@ export const LIST_BUTTON: 'a[href*="/list"]' = 'a[href*="/list"]'
 export const BUTTON: "button" = "button"
 export const INPUT: 'input' = 'input'
 export const CIRCLE: '[data-testid=circleWrapper]' = '[data-testid=circleWrapper]'
+export const SMALL_CIRCLE: "[class*=circle_changing]" = "[class*=circle_changing]"
 export const CIRCLE_HEAD: '[data-testid=head]' = '[data-testid=head]'
 export const CIRCLE_TAIL: '[data-testid=tail]' = '[data-testid=tail]'
 export const COLOR_DEFAULT: '4px solid rgb(0, 50, 255)' = '4px solid rgb(0, 50, 255)'
