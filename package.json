@@ -1,5 +1,6 @@
 {
   "name": "algorithms-project",
+  "homepage": "./",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,6 +13,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-test-renderer": "17.0.2",
     "cypress": "^12.14.0",
+    "gh-pages": "^5.0.0",
     "nanoid": "^3.2.0",
     "prettier": "^2.6.2",
     "react": "^17.0.2",
@@ -27,7 +29,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

@@ -14,6 +14,9 @@ function App() {
     <div className={styles.app}>
       <BrowserRouter>
         <Switch>
+          <Route path="/algososh" exact>
+            <MainPage />
+          </Route>
           <Route path="/" exact>
             <MainPage />
           </Route>
