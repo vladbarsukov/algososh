@@ -3,7 +3,7 @@
 
 ---
 
-Ссылка на проект: https://vladbarsukov.github.io/mesto-project  
+Ссылка на проект: https://vladbarsukov.github.io/algososh
 
 ---
 
